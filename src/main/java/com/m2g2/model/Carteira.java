@@ -20,4 +20,22 @@ public class Carteira {
 		ordens.add(ordem);
 	}
 
+	public List<Ordem> getOrdens() {
+		return ordens;
+	}
+
+	public void setOrdens(List<Ordem> ordens) {
+		this.ordens = ordens;
+	}
+
+	public List<Ativo> getAtivos() {
+		return ativos;
+	}
+
+	public void setAtivos(List<Ativo> ativos) {
+		this.ativos = ativos;
+	}
+	
+	
+
 }

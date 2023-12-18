@@ -1,6 +1,7 @@
 package com.m2g2.executador;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +16,10 @@ public class ExecutadorCompra implements IExecutador {
 		if (optional.isPresent()) {
 			Ativo ativo = optional.get();			
 			Integer quantidade = ativo.getQuantidade() + ordem.getQuantidade();
-			BigDecimal novoPrecoMedio = ativo.getPrecoMedio().add(ordem.getValor()).divide(new BigDecimal(quantidade));
+			BigDecimal novoPrecoMedio = ativo.getPrecoMedio()
+					.add(ordem.getValor())
+					.divide(new BigDecimal(quantidade))
+					.multiply(new BigDecimal(100)).setScale(2, RoundingMode.HALF_UP);
 			ativo.setQuantidade(quantidade);
 			ativo.setPrecoMedio(novoPrecoMedio);
 		} else {

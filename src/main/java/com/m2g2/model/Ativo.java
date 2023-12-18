@@ -1,6 +1,7 @@
 package com.m2g2.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Ativo {
 
@@ -11,7 +12,7 @@ public class Ativo {
 	public Ativo(String ticket, BigDecimal precoMedio, Integer quantidade) {
 		super();
 		this.ticket = ticket;
-		this.precoMedio = precoMedio;
+		this.precoMedio = precoMedio.setScale(2, RoundingMode.HALF_UP);
 		this.quantidade = quantidade;
 	}
 	
@@ -33,6 +34,10 @@ public class Ativo {
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Ativo [ticket=" + ticket + ", precoMedio=" + precoMedio + ", quantidade=" + quantidade + "]";
+	}
 	
 }
