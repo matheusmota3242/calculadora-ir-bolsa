@@ -11,7 +11,7 @@ public class AbstractFactory {
 	public static IExecutador criarExecutador(TipoOrdem tipoOrdem) throws Exception {
 		if (TipoOrdem.COMPRA.equals(tipoOrdem)) {
 			return new ExecutadorCompra();
-		} else if (TipoOrdem.COMPRA.equals(tipoOrdem)) {
+		} else if (TipoOrdem.VENDA.equals(tipoOrdem)) {
 			return new ExecutadorVenda();
 		}
 		throw new Exception("Erro no na obtenção do tipo da ordem.");

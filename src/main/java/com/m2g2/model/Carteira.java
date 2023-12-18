@@ -1,5 +1,6 @@
 package com.m2g2.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -13,10 +14,12 @@ public class Carteira {
 	
 	private List<Ativo> ativos = new ArrayList<>();
 	
+	private BigDecimal impostoRetidoNaFonte = BigDecimal.ZERO;
+	
 	public void enviarOrdem(Ordem ordem) throws Exception {
 		Optional<Ativo> optional = ativos.stream().filter(a -> a.getTicket().equals(ordem.getTicket())).findFirst();
 		IExecutador executador = AbstractFactory.criarExecutador(ordem.getTipo());
-		executador.executarOrdem(ordem, optional, ativos);
+		executador.executarOrdem(ordem, optional, this);
 		ordens.add(ordem);
 	}
 
@@ -34,6 +37,14 @@ public class Carteira {
 
 	public void setAtivos(List<Ativo> ativos) {
 		this.ativos = ativos;
+	}
+
+	public BigDecimal getImpostoRetidoNaFonte() {
+		return impostoRetidoNaFonte;
+	}
+
+	public void setImpostoRetidoNaFonte(BigDecimal impostoRetidoNaFonte) {
+		this.impostoRetidoNaFonte = impostoRetidoNaFonte;
 	}
 	
 	
