@@ -67,4 +67,11 @@ public class Ordem {
 	public BigDecimal getValorTotal() {
 		return BigDecimal.valueOf(quantidade).multiply(valor);
 	}
+
+
+	@Override
+	public String toString() {
+		return "Ordem [ticket=" + ticket + ", valor=" + valor + ", quantidade=" + quantidade + ", tipo=" + tipo
+				+ ", data=" + data + "]";
+	}
 }

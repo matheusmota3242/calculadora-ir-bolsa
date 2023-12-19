@@ -37,13 +37,13 @@ public class ExecutadorVenda implements IExecutador {
 		if (valorDaVenda.compareTo(BigDecimal.valueOf(20000.00)) >= 0) {
 			carteira.setImpostoRetidoNaFonte(valorDaVenda.multiply(BigDecimal.valueOf(ConstantesGlobais.ALIQUOTA_IR_FONTE)).setScale(2, RoundingMode.HALF_UP));
 			if (resultadoOperacao.compareTo(BigDecimal.ZERO) > 0) {
-				carteira.setImposto(carteira.getImposto().add(resultadoOperacao.multiply(BigDecimal.valueOf(ConstantesGlobais.ALIQUOTA_IR).subtract(BigDecimal.valueOf(ConstantesGlobais.ALIQUOTA_IR_FONTE)))));
+				carteira.setImposto(carteira.getImposto().add(resultadoOperacao.multiply(BigDecimal.valueOf(ConstantesGlobais.ALIQUOTA_IR).subtract(BigDecimal.valueOf(ConstantesGlobais.ALIQUOTA_IR_FONTE))).setScale(2, RoundingMode.HALF_UP)));
 			}
 		} else if (resultadoOperacao.compareTo(BigDecimal.ZERO) > 0) {
-			carteira.setImposto(carteira.getImposto().add(resultadoOperacao.multiply(BigDecimal.valueOf(ConstantesGlobais.ALIQUOTA_IR))));
+			carteira.setImposto(carteira.getImposto().add(resultadoOperacao.multiply(BigDecimal.valueOf(ConstantesGlobais.ALIQUOTA_IR)).setScale(2, RoundingMode.HALF_UP)));
 		}
 		
-		carteira.setResultado(carteira.getResultado().add(resultadoOperacao)); 
+		carteira.setResultado(carteira.getResultado().add(resultadoOperacao.setScale(2, RoundingMode.HALF_UP))); 
 		
 	}	
 

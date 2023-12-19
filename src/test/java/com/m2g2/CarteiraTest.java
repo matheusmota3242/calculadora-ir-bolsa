@@ -1,6 +1,7 @@
 package com.m2g2;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -17,7 +18,6 @@ import com.m2g2.model.builder.OrdemBuilder;
 
 class CarteiraTest {
 
-	// Método temporário apenas para TDD
 	@ParameterizedTest
 	@MethodSource("proverArgumentos")
 	void enviarOrdemCompraTest(List<Ordem> ordens, BigDecimal impostoEsperado) {
@@ -34,36 +34,24 @@ class CarteiraTest {
 		}
 	}
 	
-	private static Stream<List<Ordem>> proverOrdens() {
-		OrdemBuilder builder = new OrdemBuilder();
-		return Stream.of(
-				Arrays.asList(
-						builder.comTicket("ITUB4").comValor(new BigDecimal(60.00)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build(),
-						builder.comTicket("ITUB4").comValor(new BigDecimal(50.00)).comQuantidade(400).comTipo(TipoOrdem.VENDA).build())
-				);
-	}
 	
 	private static Stream<Arguments> proverArgumentos() {
 		OrdemBuilder builder = new OrdemBuilder();
 		return Stream.of(
 				Arguments.of(Arrays.asList(
-						builder.comTicket("ITUB4").comValor(new BigDecimal(20.00)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build(),
-						builder.comTicket("ITUB4").comValor(new BigDecimal(19.99)).comQuantidade(1000).comTipo(TipoOrdem.VENDA).build()),
+						builder.comTicket("ITUB4").comValor(new BigDecimal(20.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build(),
+						builder.comTicket("ITUB4").comValor(new BigDecimal(19.99).setScale(2, RoundingMode.HALF_UP)).comQuantidade(1000).comTipo(TipoOrdem.VENDA).build()),
 						BigDecimal.ZERO.setScale(2)),
 				
 				Arguments.of(Arrays.asList(
-						builder.comTicket("ITUB4").comValor(new BigDecimal(20.00)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build(),
-						builder.comTicket("ITUB4").comValor(new BigDecimal(20.00)).comQuantidade(1000).comTipo(TipoOrdem.VENDA).build()),
+						builder.comTicket("ITUB4").comValor(new BigDecimal(20.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build(),
+						builder.comTicket("ITUB4").comValor(new BigDecimal(20.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(1000).comTipo(TipoOrdem.VENDA).build()),
 						BigDecimal.ZERO.setScale(2)),
-				
+		
 				Arguments.of(Arrays.asList(
-						builder.comTicket("ITUB4").comValor(new BigDecimal(50.00)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build(),
-						builder.comTicket("ITUB4").comValor(new BigDecimal(50.00)).comQuantidade(400).comTipo(TipoOrdem.VENDA).build()),
-						BigDecimal.ZERO.setScale(2)),
-				Arguments.of(Arrays.asList(
-						builder.comTicket("ITUB4").comValor(new BigDecimal(19.99999)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build(),
-						builder.comTicket("ITUB4").comValor(new BigDecimal(20.00001)).comQuantidade(1000).comTipo(TipoOrdem.VENDA).build()),
-						BigDecimal.ZERO.setScale(2))		
+						builder.comTicket("ITUB4").comValor(new BigDecimal(19.99).setScale(2, RoundingMode.HALF_UP)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build(),
+						builder.comTicket("ITUB4").comValor(new BigDecimal(20.01).setScale(2, RoundingMode.HALF_UP)).comQuantidade(1000).comTipo(TipoOrdem.VENDA).build()),
+						BigDecimal.valueOf(3).setScale(2))		
 				);
 	}
 }

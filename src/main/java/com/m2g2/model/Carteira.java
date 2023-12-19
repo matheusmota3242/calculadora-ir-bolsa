@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.m2g2.constantes.ConstantesGlobais;
-import com.m2g2.enums.TipoOrdem;
 import com.m2g2.factory.AbstractFactory;
 import com.m2g2.factory.IExecutador;
 
@@ -17,11 +15,11 @@ public class Carteira {
 	
 	private List<Ativo> ativos = new ArrayList<>();
 	
-	private BigDecimal impostoRetidoNaFonte = BigDecimal.ZERO;
+	private BigDecimal impostoRetidoNaFonte = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
 	
-	private BigDecimal imposto = BigDecimal.ZERO;
+	private BigDecimal imposto = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
 	
-	private BigDecimal resultado = BigDecimal.ZERO;
+	private BigDecimal resultado = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
 	
 	public void enviarOrdem(Ordem ordem) throws Exception {
 		Optional<Ativo> optional = ativos.stream().filter(a -> a.getTicket().equals(ordem.getTicket())).findFirst();
@@ -31,23 +29,12 @@ public class Carteira {
 	}
 	
 	public BigDecimal consolidarImpostos() {
-//		BigDecimal valorTotalDasVendas = ordens.stream().filter(ordem -> TipoOrdem.VENDA.equals(ordem.getTipo())).map(Ordem::getValorTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
-////		ordens.stream().filter(ordem -> TipoOrdem.VENDA.equals(ordem.getTipo())).forEach(ordem -> {
-////			 
-////			
-////			if (ordem.getValorTotal().compareTo(BigDecimal.valueOf(20000.00)) >= 0) {
-////				imposto = imposto.add(ordem.getValorTotal()
-////						.multiply(BigDecimal.valueOf(ConstantesGlobais.ALIQUOTA_IR)
-////								.subtract(BigDecimal.valueOf(ConstantesGlobais.ALIQUOTA_IR_FONTE))));
-////			} else if (true) {
-////				
-////			}
-////		});
-		if (resultado.compareTo(BigDecimal.ZERO) > 0) {
-			return imposto.setScale(2, RoundingMode.HALF_UP);
-		} else {
+
+		if (resultado.compareTo(BigDecimal.ZERO) <= 0) {
+			
 			return BigDecimal.ZERO.setScale(2);
 		}
+		return imposto;
 	}
 
 	public List<Ordem> getOrdens() {
