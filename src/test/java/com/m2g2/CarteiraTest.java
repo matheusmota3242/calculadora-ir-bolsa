@@ -1,9 +1,14 @@
 package com.m2g2;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import com.m2g2.enums.TipoOrdem;
 import com.m2g2.model.Carteira;
@@ -13,28 +18,52 @@ import com.m2g2.model.builder.OrdemBuilder;
 class CarteiraTest {
 
 	// Método temporário apenas para TDD
-	@Test
-	void enviarOrdemCompraTest() {
+	@ParameterizedTest
+	@MethodSource("proverArgumentos")
+	void enviarOrdemCompraTest(List<Ordem> ordens, BigDecimal impostoEsperado) {
 		Carteira carteira = new Carteira();
 		
 		try {
-			OrdemBuilder builder = new OrdemBuilder();
-			Ordem ordem1 = builder.comTicket("ITUB4").comValor(new BigDecimal(50.00)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build();
-			Ordem ordem2 = builder.comTicket("ITUB4").comValor(new BigDecimal(60.00)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build();
-			Ordem ordem3 = builder.comTicket("ITUB4").comValor(new BigDecimal(50.00)).comQuantidade(400).comTipo(TipoOrdem.VENDA).build();
-
-			carteira.enviarOrdem(ordem1);
-			carteira.enviarOrdem(ordem2);
-			carteira.enviarOrdem(ordem3);
-			System.out.println(carteira.getAtivos().get(0).toString());
-			System.out.println(carteira.getImpostoRetidoNaFonte());
-			Assertions.assertAll(() -> {
-				Assertions.assertEquals(new BigDecimal(55.00).setScale(2), carteira.getAtivos().get(0).getPrecoMedio());
-				Assertions.assertTrue(carteira.getImpostoRetidoNaFonte().compareTo(BigDecimal.ZERO) == 1);
-			});
+			for (Ordem ordem : ordens) {
+				carteira.enviarOrdem(ordem);
+			}
+			System.out.println(carteira.toString());
+			Assertions.assertEquals(impostoEsperado, carteira.consolidarImpostos());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private static Stream<List<Ordem>> proverOrdens() {
+		OrdemBuilder builder = new OrdemBuilder();
+		return Stream.of(
+				Arrays.asList(
+						builder.comTicket("ITUB4").comValor(new BigDecimal(60.00)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build(),
+						builder.comTicket("ITUB4").comValor(new BigDecimal(50.00)).comQuantidade(400).comTipo(TipoOrdem.VENDA).build())
+				);
+	}
+	
+	private static Stream<Arguments> proverArgumentos() {
+		OrdemBuilder builder = new OrdemBuilder();
+		return Stream.of(
+				Arguments.of(Arrays.asList(
+						builder.comTicket("ITUB4").comValor(new BigDecimal(20.00)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build(),
+						builder.comTicket("ITUB4").comValor(new BigDecimal(19.99)).comQuantidade(1000).comTipo(TipoOrdem.VENDA).build()),
+						BigDecimal.ZERO.setScale(2)),
+				
+				Arguments.of(Arrays.asList(
+						builder.comTicket("ITUB4").comValor(new BigDecimal(20.00)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build(),
+						builder.comTicket("ITUB4").comValor(new BigDecimal(20.00)).comQuantidade(1000).comTipo(TipoOrdem.VENDA).build()),
+						BigDecimal.ZERO.setScale(2)),
+				
+				Arguments.of(Arrays.asList(
+						builder.comTicket("ITUB4").comValor(new BigDecimal(50.00)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build(),
+						builder.comTicket("ITUB4").comValor(new BigDecimal(50.00)).comQuantidade(400).comTipo(TipoOrdem.VENDA).build()),
+						BigDecimal.ZERO.setScale(2)),
+				Arguments.of(Arrays.asList(
+						builder.comTicket("ITUB4").comValor(new BigDecimal(19.99999)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build(),
+						builder.comTicket("ITUB4").comValor(new BigDecimal(20.00001)).comQuantidade(1000).comTipo(TipoOrdem.VENDA).build()),
+						BigDecimal.ZERO.setScale(2))		
+				);
 	}
 }

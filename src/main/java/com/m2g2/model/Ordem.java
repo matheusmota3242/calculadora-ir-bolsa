@@ -63,4 +63,8 @@ public class Ordem {
 	public void setData(LocalDate data) {
 		this.data = data;
 	}
+	
+	public BigDecimal getValorTotal() {
+		return BigDecimal.valueOf(quantidade).multiply(valor);
+	}
 }
