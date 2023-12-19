@@ -29,12 +29,13 @@ public class Carteira {
 	}
 	
 	public BigDecimal consolidarImpostos() {
-
-		if (resultado.compareTo(BigDecimal.ZERO) <= 0) {
-			
-			return BigDecimal.ZERO.setScale(2);
+		BigDecimal valorTotalVendido = ordens.stream().map(Ordem::getValorTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
+		if (resultado.compareTo(BigDecimal.ZERO) > 0 && valorTotalVendido.compareTo(BigDecimal.valueOf(20000)) > 0) {
+			return imposto;
+		} else {
+			imposto = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
+			return imposto;
 		}
-		return imposto;
 	}
 
 	public List<Ordem> getOrdens() {
