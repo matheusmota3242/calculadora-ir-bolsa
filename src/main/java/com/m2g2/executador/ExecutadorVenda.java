@@ -17,9 +17,8 @@ public class ExecutadorVenda implements IExecutador {
 		BigDecimal resultadoOperacao = BigDecimal.ZERO;
 		if (optional.isPresent()) {
 			Ativo ativo = optional.get();
-			if (ordem.getValor().compareTo(ativo.getPrecoMedio()) > 0) {
-				resultadoOperacao = ordem.getValorTotal().subtract(ativo.getPrecoMedio().multiply(BigDecimal.valueOf(ordem.getQuantidade())));
-			}
+			resultadoOperacao = ordem.getValorTotal().subtract(ativo.getPrecoMedio().multiply(BigDecimal.valueOf(ordem.getQuantidade())));
+			
 			
 			if (ativo.getQuantidade() > ordem.getQuantidade()) {
 				ativo.setQuantidade(ativo.getQuantidade() - ordem.getQuantidade());
