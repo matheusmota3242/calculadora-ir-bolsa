@@ -18,6 +18,6 @@
 
 ## Projeto
 
-Baixe o projeto **calculadora-ir-bolsa** e importe para sua IDE, apois isso clique em exacutar projeto.
+Baixe o projeto **calculadora-ir-bolsa** e importe para sua IDE, após isso clique em exacutar projeto.
 	
 
