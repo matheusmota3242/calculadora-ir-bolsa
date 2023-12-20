@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -35,6 +36,7 @@ class CarteiraTest {
 	}
 	
 	
+	
 	private static Stream<Arguments> proverArgumentos() {
 		OrdemBuilder builder = new OrdemBuilder();
 		return Stream.of(
@@ -57,7 +59,20 @@ class CarteiraTest {
 						builder.comTicket("ITUB4").comValor(new BigDecimal(20.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(2000).comTipo(TipoOrdem.COMPRA).build(),
 						builder.comTicket("ITUB4").comValor(new BigDecimal(20.01).setScale(2, RoundingMode.HALF_UP)).comQuantidade(1000).comTipo(TipoOrdem.VENDA).build(),
 						builder.comTicket("ITUB4").comValor(new BigDecimal(19.99).setScale(2, RoundingMode.HALF_UP)).comQuantidade(1000).comTipo(TipoOrdem.VENDA).build()),
-						BigDecimal.ZERO.setScale(2))			
+						BigDecimal.ZERO.setScale(2)),
+				
+				Arguments.of(Arrays.asList(
+                        builder.comTicket("ITUB4").comValor(new BigDecimal(20.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build(),
+                        builder.comTicket("ITUB4").comValor(new BigDecimal(30.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(500).comTipo(TipoOrdem.VENDA).build()),
+                        BigDecimal.valueOf(5).setScale(2)),
+
+                
+                Arguments.of(Arrays.asList(
+                        builder.comTicket("ITUB4").comValor(new BigDecimal(150.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(200).comTipo(TipoOrdem.COMPRA).build(),
+                        builder.comTicket("ITUB4").comValor(new BigDecimal(150.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(150).comTipo(TipoOrdem.VENDA).build()),
+                        BigDecimal.valueOf(7.5).setScale(2))
 				);
 	}
+	
+	 
 }
