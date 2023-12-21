@@ -77,7 +77,12 @@ class CarteiraTest {
                         builder.comTicket("ITUB4").comValor(new BigDecimal(10.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(500).comTipo(TipoOrdem.COMPRA).build(),
                         builder.comTicket("ITUB4").comValor(new BigDecimal(30.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(500).comTipo(TipoOrdem.COMPRA).build(),
                         builder.comTicket("ITUB4").comValor(new BigDecimal(20.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(1000).comTipo(TipoOrdem.VENDA).build()),
-                        BigDecimal.ZERO.setScale(2))
+                        BigDecimal.ZERO.setScale(2)),
+                
+                Arguments.of(Arrays.asList(
+                        builder.comTicket("ITUB4").comValor(new BigDecimal(20.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build(),
+                        builder.comTicket("ITUB4").comValor(new BigDecimal(30.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(500).comTipo(TipoOrdem.VENDA).build()),
+                        BigDecimal.valueOf(750).setScale(2))
 				);
 	}
 	
@@ -102,6 +107,12 @@ class CarteiraTest {
 						builder.comTicket("ITUB4").comValor(new BigDecimal(20.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build(),
 						builder.comTicket("ITUB4").comValor(new BigDecimal(19.99).setScale(2, RoundingMode.HALF_UP)).comQuantidade(1500).comTipo(TipoOrdem.VENDA).build()),
 						"Quantidade de ativos na carteira menor que a da ordem."),
+				
+				Arguments.of(Arrays.asList(
+						builder.comTicket("ITUB4").comValor(new BigDecimal(20.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build(),
+						builder.comTicket("ITUB4").comValor(new BigDecimal(20.01).setScale(2, RoundingMode.HALF_UP)).comQuantidade(1000).comTipo(TipoOrdem.VENDA).build(),
+						builder.comTicket("ITUB4").comValor(new BigDecimal(20.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(500).comTipo(TipoOrdem.VENDA).build()),
+						"Nao ha registro do ativo 'ITUB4' na carteira."),
 				
 				Arguments.of(Arrays.asList(
 						builder.comTicket("ITUB4").comValor(new BigDecimal(20.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build(),
