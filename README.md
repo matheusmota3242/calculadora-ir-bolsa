@@ -22,7 +22,7 @@ Baixe o projeto **calculadora-ir-bolsa** e importe para sua IDE, após isso cliq
 
 ## Executar os teste
 
-### Navegue até a classe de teste:
+### Navegue até a classe de testes (**CarteiraTest**):
 
 - Abra o arquivo que contém seus testes JUnit na IDE Eclipse.
 
