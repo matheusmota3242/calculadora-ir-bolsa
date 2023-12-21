@@ -86,10 +86,7 @@ class CarteiraTest {
 			}
 		});
 
-		String expectedMessage = mensagemEsperada;
-		String actualMessage = exception.getMessage();
-
-		assertTrue(actualMessage.contains(expectedMessage));
+		assertTrue(exception.getMessage().contains(mensagemEsperada));
 	}
 	
 	private static Stream<Arguments> proverArgumentos2() {
