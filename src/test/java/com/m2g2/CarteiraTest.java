@@ -62,17 +62,18 @@ class CarteiraTest {
 						BigDecimal.ZERO.setScale(2)),
 				
 				Arguments.of(Arrays.asList(
-                        builder.comTicket("ITUB4").comValor(new BigDecimal(20.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build(),
-                        builder.comTicket("ITUB4").comValor(new BigDecimal(30.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(500).comTipo(TipoOrdem.VENDA).build()),
-                        BigDecimal.valueOf(5).setScale(2)),
+                        builder.comTicket("ITUB4").comValor(new BigDecimal(30.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build(),
+                        builder.comTicket("ITUB4").comValor(new BigDecimal(20.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(500).comTipo(TipoOrdem.VENDA).build()),
+                        BigDecimal.ZERO.setScale(2)),
 
                 
                 Arguments.of(Arrays.asList(
-                        builder.comTicket("ITUB4").comValor(new BigDecimal(150.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(200).comTipo(TipoOrdem.COMPRA).build(),
+                        builder.comTicket("ITUB4").comValor(new BigDecimal(150.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(1000).comTipo(TipoOrdem.COMPRA).build(),
                         builder.comTicket("ITUB4").comValor(new BigDecimal(150.00).setScale(2, RoundingMode.HALF_UP)).comQuantidade(150).comTipo(TipoOrdem.VENDA).build()),
-                        BigDecimal.valueOf(7.5).setScale(2))
+                        BigDecimal.ZERO.setScale(2))
 				);
 	}
+	
 	
 	 
 }
