@@ -26,10 +26,10 @@ public class ExecutadorVenda implements IExecutador {
 			} else if (ativo.getQuantidade().equals(ordem.getQuantidade())) {
 				carteira.getAtivos().removeIf(a -> a.getTicket().equals(ordem.getTicket()));
 			} else {
-				throw new Exception("Quantidade de ativos na carteira menor que a da ordem");
+				throw new Exception("Quantidade de ativos na carteira menor que a da ordem.");
 			}
 		} else {
-			throw new Exception(String.format("Não há registro do ativo '%s' na carteira.", ordem.getTicket()));
+			throw new Exception(String.format("Nao ha registro do ativo '%s' na carteira.", ordem.getTicket()));
 		}
 		
 		BigDecimal valorDaVenda = ordem.getValorTotal();
