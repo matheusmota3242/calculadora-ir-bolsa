@@ -19,5 +19,17 @@
 ## Projeto
 
 Baixe o projeto **calculadora-ir-bolsa** e importe para sua IDE, após isso clique em exacutar projeto.
-	
+
+## Executar os teste
+
+### Navegue até a classe de teste:
+
+- Abra o arquivo que contém seus testes JUnit na IDE Eclipse.
+
+### Execute os testes:
+
+- Clique com o botão direito na classe de teste.
+  
+- Selecione a opção "Run As" e escolha "JUnit Test".
+
 
