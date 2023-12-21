@@ -21,7 +21,7 @@ class CarteiraTest {
 
 	@ParameterizedTest
 	@MethodSource("proverArgumentos")
-	void enviarOrdemCompraTest(List<Ordem> ordens, BigDecimal impostoEsperado) {
+	void enviarOrdemTest(List<Ordem> ordens, BigDecimal impostoEsperado) {
 		Carteira carteira = new Carteira();
 		
 		try {
